@@ -7,6 +7,9 @@
   "author": "fhfuih",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": "10.x"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
