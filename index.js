@@ -1,3 +1,7 @@
+'use strict';
+
+require('dotenv').config();
+
 const express = require('express');
 
 /* Middlewares */
@@ -11,6 +15,8 @@ const logger = require('./src/logger/logger');
 const errorResponse = require('./src/responses/errorResponse');
 
 const app = express();
+const port = process.env.PORT || 3000;
+const ip = process.env.IP || '127.0.0.1';
 
 /* CORS */
 app.use(cors()); // allow all CORS
@@ -53,6 +59,6 @@ app.use((req, res) => {
   );
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  logger.info(`App listening on port ${process.env.PORT || 3000}`);
+app.listen(port, ip, () => {
+  logger.info(`App listening on ${ip}:${port}`);
 });
