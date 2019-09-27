@@ -1,6 +1,12 @@
-# Express Boilerplate
+# CodeIT Suisse 2019 Pig1Dan
 
-Yet another express boilerplate.
+## Run
+
+After installing dependecies by `npm install` (or `yarn install`), run with `npm start`.
+
+## Structure
+
+In the express boilerplate:
 
 - Winston logger
   - `warn`+ -> file
@@ -17,3 +23,7 @@ Yet another express boilerplate.
   - Eslint: standard JS
   - Prettier: default
     - Single quotes
+
+## Python adapter
+
+See [python-shell](https://www.npmjs.com/package/python-shell)
