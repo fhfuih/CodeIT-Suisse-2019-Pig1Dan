@@ -4,7 +4,7 @@
         "cflags!": [ "-fno-exceptions" ],
         "cflags_cc!": [ "-fno-exceptions" ],
         "sources": [
-            "cppsrc/sample.cpp",
+            "cppsrc/main.cpp",
             "cppsrc/hello.cpp"
         ],
         'include_dirs': [

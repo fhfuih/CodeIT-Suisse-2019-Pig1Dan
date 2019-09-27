@@ -43,7 +43,7 @@ app.use(router);
 
 /* errors */
 app.use((err, req, res, next) => {
-  logger.warn(err);
+  console.warn(err);
   res.status(500).json(
     errorResponse({
       message: 'Internal Server Error'

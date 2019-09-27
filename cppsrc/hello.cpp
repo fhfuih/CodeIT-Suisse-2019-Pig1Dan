@@ -22,6 +22,6 @@ Napi::String hello::helloWrapped(const Napi::CallbackInfo& info) {
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
-    exports.Set("add", Napi::Function::New(env, hello::helloWrapped));
+    exports.Set("hello", Napi::Function::New(env, hello::helloWrapped));
     return exports;
 }
