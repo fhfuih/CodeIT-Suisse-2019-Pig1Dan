@@ -13,7 +13,7 @@ const infoConsole = new winston.transports.Console({
   level: 'info',
   format:
     process.env.NODE_ENV === 'production'
-      ? winston.format.padLevels
+      ? winston.format.padLevels()
       : winston.format.cli()
 });
 
