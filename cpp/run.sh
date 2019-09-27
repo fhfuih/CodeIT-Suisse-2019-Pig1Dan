@@ -1,1 +1,1 @@
-docker run --rm -v `pwd`:/tmp frolvlad/alpine-gxx time /tmp/$1/$1 $2
+eval "time ./$1/$1 \"$2\""
