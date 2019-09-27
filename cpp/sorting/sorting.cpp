@@ -8,8 +8,13 @@ using namespace std;
 vector<int> arr;
 vector<int> sorted;
 
-void input(const char *json)
+void input(const char *path)
 {
+    ifstream file(path);
+    string str((std::istreambuf_iterator<char>(file)),
+               std::istreambuf_iterator<char>());
+    const char *json = str.c_str();
+
     Document document;
     document.Parse(json);
     const Value array = document.GetArray();
