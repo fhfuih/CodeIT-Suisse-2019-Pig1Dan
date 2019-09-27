@@ -23,7 +23,7 @@ app.use(cors()); // allow all CORS
 app.options('*', cors()); // allow pre-flight
 
 /* POST form parser */
-app.use(bodyParser.json({ strict: false }));
+app.use(bodyParser.json({ strict: false, limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /* security */
