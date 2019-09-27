@@ -23,9 +23,10 @@ function sort(req, res) {
     child.on('close', data => {
       if (data) {
         return reject(new Error(`Alrogithm aborted with exit code (${data})`));
-      } else {
-        return fs.unlink(cachePath);
       }
+      // else {
+      //   return fs.unlink(cachePath);
+      // }
     });
   }).then(data => res.json(data));
 }
