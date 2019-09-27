@@ -98,3 +98,4 @@ public
 .dynamodb/
 
 .DS_Store
+cache/
