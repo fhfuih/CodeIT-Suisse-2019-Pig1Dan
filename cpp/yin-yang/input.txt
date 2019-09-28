@@ -1,0 +1,4 @@
+{
+    "number_of_elements": 25,
+  "number_of_operations": 12,
+  "elements": "YYYYYyyYYYYyyYyYYyyYYYyYY" }

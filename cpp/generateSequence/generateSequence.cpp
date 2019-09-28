@@ -41,6 +41,7 @@ void input(const char *path)
         string x, y;
         x = dep[i].GetObject()["dependee"].GetString();
         y = dep[i].GetObject()["dependentOn"].GetString();
+        if (!id.count(x) || !id.count(y)) continue;
         int idx = id[x];
         int idy = id[y];
         go[idy].push_back(idx);

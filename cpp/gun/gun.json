@@ -1,0 +1,10 @@
+{
+  "grid":[
+    "OOXXOO",
+    "XOOOOX",
+    "XOXXOX",
+    "OOXOOO",
+    "OXOOXO"
+  ],
+  "fuel":15
+}
