@@ -13,9 +13,11 @@ function sort(req, res) {
 
   return new Promise((resolve, reject) => {
     const child = spawn(getCppExecPath('sorting'), [cachePath]);
-    const returnValue = Buffer.from([]);
+    let returnValue = Buffer.from([]);
 
-    child.stdout.on('data', data => returnValue.concat([data])); // buffer block
+    child.stdout.on('data', data => {
+      returnValue = Buffer.concat([returnValue, data]);
+    }); // buffer block
     child.stdout.on('close', () => resolve(JSON.parse(returnValue.toString())));
 
     child.stderr.on('data', data =>
