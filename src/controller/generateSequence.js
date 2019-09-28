@@ -2,20 +2,23 @@
 
 const { spawn } = require('child_process');
 const getCppExecPath = require('./getCppExecPath');
+const getCachePath = require('./getCachePath');
+const fs = require('fs');
 
-function generateSequence(req, res) {
-  const payload = req.body;
-  const execPath = getCppExecPath('generateSqeuence');
+function sort(req, res) {
+  const input = JSON.stringify(req.body);
+
+  const cachePath = getCachePath();
+  fs.writeFileSync(cachePath, input);
 
   return new Promise((resolve, reject) => {
-    const child = spawn(execPath);
-    const { write } = child.stdin;
+    const child = spawn(getCppExecPath('generateSequence'), [cachePath]);
     let returnValue = Buffer.from([]);
 
     child.stdout.on('data', data => {
       returnValue = Buffer.concat([returnValue, data]);
     }); // buffer block
-    child.stdout.on('close', () => resolve(returnValue.toString()));
+    child.stdout.on('close', () => resolve(JSON.parse(returnValue.toString())));
 
     child.stderr.on('data', data =>
       reject(new Error(JSON.parse(data.toString())))
@@ -25,16 +28,11 @@ function generateSequence(req, res) {
       if (data) {
         return reject(new Error(`Alrogithm aborted with exit code (${data})`));
       }
+      // else {
+      //   return fs.unlink(cachePath);
+      // }
     });
-
-    // stdin
-    write(payload.modules.length + '\n');
-    payload.modules.forEach(m => write(m + '\n'));
-    write(payload.dependencyPairs.legnth + '\n');
-    payload.dependencyPairs.forEach(({ dependee, dependentOn }) => {
-      write(dependee + '\n' + dependentOn + '\n');
-    });
-  }).then(data => res.type('json').send(data));
+  }).then(data => res.json(data));
 }
 
-module.exports = generateSequence;
+module.exports = sort;
