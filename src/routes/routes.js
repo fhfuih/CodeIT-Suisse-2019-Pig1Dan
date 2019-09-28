@@ -1,6 +1,5 @@
 const router = require('express-promise-router')();
 
-const logger = require('../logger/logger');
 const sort = require('../controller/sort');
 const square = require('../controller/square');
 
