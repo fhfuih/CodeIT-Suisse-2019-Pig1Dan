@@ -2,6 +2,7 @@ const router = require('express-promise-router')();
 
 const logger = require('../logger/logger');
 const sort = require('../controller/sort');
+const square = require('../controller/square');
 
 router.get('/hello', (req, res) => {
   const { name = 'world' } = req.query;
@@ -10,9 +11,6 @@ router.get('/hello', (req, res) => {
 
 router.post('/sort', sort);
 
-router.post('/square', (req, res) => {
-  logger.info(`/square Payload is "${JSON.stringify(req.body)}"`);
-  res.json([]);
-});
+router.post('/square', square);
 
 module.exports = router;
