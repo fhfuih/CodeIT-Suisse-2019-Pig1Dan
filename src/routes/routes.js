@@ -13,6 +13,13 @@ router.post('/sort', sort);
 
 router.post('/square', square);
 
-router.post('/generateSequence', genSeq);
+router.post(
+  '/generateSequence',
+  (req, res, next) => {
+    console.log(req.body);
+    next();
+  },
+  genSeq
+);
 
 module.exports = router;
