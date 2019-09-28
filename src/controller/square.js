@@ -1,3 +1,4 @@
+
 function square (req, res) {
   const { input } = req.body;
   console.log(input);
