@@ -16,19 +16,31 @@ int indeg[maxn];
 int n;
 int m;
 
-void input()
+void input(const char *path)
 {
-    cin >> n;
+    ifstream file(path);
+    string str((std::istreambuf_iterator<char>(file)),
+               std::istreambuf_iterator<char>());
+    const char *json = str.c_str();
+
+    Document document;
+    document.Parse(json);
+
+    const Value& array = document["modules"];
+    n = array.Size();
     for (int i = 0; i < n; i++) {
         string x;
-        cin >> x;
+        x = array[i].GetString();
         mod.push_back(x);
         id[x] = i;
     }
-    cin >> m;
+
+    const Value& dep = document["dependencyPairs"];
+    m = dep.Size();
     for (int i = 0; i < m; i++) {
         string x, y;
-        cin >> x >> y;
+        x = dep[i].GetObject()["dependee"].GetString();
+        y = dep[i].GetObject()["dependentOn"].GetString();
         int idx = id[x];
         int idy = id[y];
         go[idy].push_back(idx);
@@ -73,9 +85,9 @@ void output()
 {
 }
 
-int main()
+int main(int argc, char **argv)
 {
-    input();
+    input(argv[1]);
     solve();
     output();
     return 0;
