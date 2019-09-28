@@ -16,6 +16,6 @@ router.post('/square', square);
 
 router.post('/generateSequence', genSeq);
 
-router.post('/lottery', lottery);
+router.get('/lottery', lottery);
 
 module.exports = router;
