@@ -91,7 +91,7 @@ void solve()
         double best_score = param_score(base, trend, scales, pcounts);
         double now_score = best_score;
 
-        double T = 1e4;
+        double T = 1e5;
         double coef = 0.9999;
         double T_low = 1e-4;
 
@@ -99,68 +99,70 @@ void solve()
 
         int counter = 0;
 
-        while (T > T_low) {
+        while (true) {
+
+            while (T > T_low) {
+
+                if (T < 10) {
+                    coef = 0.99999;
+                }
+
+                if ((clock() - st) * 1.0 / CLOCKS_PER_SEC > 6.5) {
+                    break;
+                }
+
+                double base__ = base;
+                double trend__ = trend;
+                vector<double> scales__ = scales;
+                vector<double> pcounts__ = pcounts;
+
+                double perc;
+                if (T > 1e5) {
+                    perc = 0.4;
+                } else if (T > 1) {
+                    perc = 0.1;
+                } else if (T > 1e-2) {
+                    perc = T * 0.5;
+                }
+
+                base__ += (50 - 100 * (rand() * 1.0 / RAND_MAX)) * perc;
+                base__ = min(max(base__, 200.0), 300.0);
+                trend__ += (100 - 200 * (rand() * 1.0 / RAND_MAX)) * perc;
+                trend__ = min(max(trend__, -100.0), 100.0);
+                for (int i = 0; i < sine; i++) {
+                    scales__[i] += (5 - 10 * (rand() * 1.0 / RAND_MAX)) * perc;
+                    scales__[i] = min(max(scales__[i], 5.0), 15.0);
+                    pcounts__[i] += (45 - 90 * (rand() * 1.0 / RAND_MAX)) * perc;
+                    pcounts__[i] = min(max(pcounts__[i], 10.0), 100.0);
+                }
+
+                double new_score = param_score(base__, trend__, scales__, pcounts__);
+                double delta = new_score - now_score;
+
+                if (delta < 0 || exp(-delta / T) > rand() * 1.0 / RAND_MAX) {
+                    now_score = new_score;
+                    base = base__;
+                    trend = trend__;
+                    scales = scales__;
+                    pcounts = pcounts__;
+                    if (new_score < best_score) {
+                        best_score = new_score;
+                        base_ = base__;
+                        trend_ = trend__;
+                        scales_ = scales__;
+                        pcounts_ = pcounts__;
+                    }
+                }
+
+                T *= coef;
+            }
 
             if ((clock() - st) * 1.0 / CLOCKS_PER_SEC > 6.5) {
                 break;
             }
 
-            double base__ = base;
-            double trend__ = trend;
-            vector<double> scales__ = scales;
-            vector<double> pcounts__ = pcounts;
+            T = 1e3;
 
-            double perc;
-            if (T > 1e5) {
-                perc = 0.4;
-            } else if (T > 1) {
-                perc = 0.05;
-            } else {
-                perc = T * 0.1;
-            }
-
-            base__ += (50 - 100 * (rand() * 1.0 / RAND_MAX)) * perc;
-            base__ = min(max(base__, 200.0), 300.0);
-            trend__ += (100 - 200 * (rand() * 1.0 / RAND_MAX)) * perc;
-            trend__ = min(max(trend__, -100.0), 100.0);
-            for (int i = 0; i < sine; i++) {
-                scales__[i] += (5 - 10 * (rand() * 1.0 / RAND_MAX)) * perc;
-                scales__[i] = min(max(scales__[i], 5.0), 15.0);
-                pcounts__[i] += (45 - 90 * (rand() * 1.0 / RAND_MAX)) * perc;
-                pcounts__[i] = min(max(pcounts__[i], 10.0), 100.0);
-            }
-
-            double new_score = param_score(base__, trend__, scales__, pcounts__);
-            double delta = new_score - now_score;
-
-/*
-            if (counter % 1000000 == 0) {
-                cout << "best_score = " << best_score 
-                    << "  now_score = " << now_score << endl;
-                if (delta > 0) {
-                    cout << "T = " << T << "  exp = " << exp(-delta / T) << endl;
-                } else {
-                    cout << "T = " << T << endl;
-                }
-            }
-*/
-
-            if (delta < 0 || exp(-delta / T) > rand() * 1.0 / RAND_MAX) {
-                now_score = new_score;
-                base = base__;
-                trend = trend__;
-                scales = scales__;
-                pcounts = pcounts__;
-                if (new_score < best_score) {
-                    best_score = new_score;
-                    base_ = base__;
-                    trend_ = trend__;
-                    scales_ = scales__;
-                    pcounts_ = pcounts__;
-                }
-            }
-
-            T *= coef;
         }
 
         out[sine - 1].push_back(100);

@@ -1,7 +1,7 @@
 const path = require('path');
 
-function getCppExecPath(name) {
-  return path.join(__dirname, '..', '..', 'cpp', name, name);
+function getCppExecPath(name, rootname) {
+  return path.join(__dirname, '..', '..', 'cpp', rootname || name, name);
 }
 
 module.exports = getCppExecPath;

@@ -1,4 +1,0 @@
-{
-    "maxChoosableInteger": "5",
-    "desiredTotal": "11"
-}

@@ -25,6 +25,7 @@ app.options('*', cors()); // allow pre-flight
 /* POST form parser */
 app.use(bodyParser.json({ strict: false, limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text({ type: ['text/plain', 'image/svg+xml'] }));
 
 /* security */
 app.use(helmet());
